@@ -1,26 +1,51 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { PrismaClient } from '@prisma/client';
 
+const prisma = new PrismaClient();
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto) {
+    const user = await prisma.user.create({
+      data: {
+        name: createUserDto.name,
+        email: createUserDto.email,
+        cpf: createUserDto.cpf,
+      },
+    });
+    return `usuário criado com sucesso ${user}`;
   }
 
   findAll() {
-    return `This action returns all users`;
+    return prisma.user.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    const user = await prisma.user.findFirst({
+      where: {
+        id,
+      },
+    });
+    return user ? user : 'Usuário não encontrado!';
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const user = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: updateUserDto,
+    });
+    return { message: 'Usuário atualizado com sucesso!', user };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async delete(id: number) {
+    await prisma.user.delete({
+      where: {
+        id,
+      },
+    });
+    return 'Usuário deletado com sucesso';
   }
 }
