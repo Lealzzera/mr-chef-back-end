@@ -2,6 +2,15 @@
 /dist
 /node_modules
 /build
+/data
+
+# private & public keys
+private_key.pem
+public_key.pem
+
+# docker compose file
+
+docker-compose.yml
 
 # Logs
 logs
