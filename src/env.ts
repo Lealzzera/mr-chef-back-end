@@ -5,6 +5,9 @@ export const envSchema = z.object({
   PORT: z.coerce.number().optional().default(3333),
   JWT_PRIVATE_KEY: z.string(),
   JWT_PUBLIC_KEY: z.string(),
+  USER_DATABASE: z.string(),
+  USER_DATABASE_PASSWORD: z.string(),
+  DATABASE_NAME: z.string(),
 });
 
 export type Env = z.infer<typeof envSchema>;
