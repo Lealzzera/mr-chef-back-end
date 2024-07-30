@@ -8,9 +8,6 @@
 private_key.pem
 public_key.pem
 
-# docker compose file
-
-docker-compose.yml
 
 # Logs
 logs
